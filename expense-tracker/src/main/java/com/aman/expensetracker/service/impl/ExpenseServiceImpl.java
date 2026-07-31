@@ -4,53 +4,57 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.aman.expensetracker.exception.ResourceNotFoundException;
+
 import com.aman.expensetracker.entity.Expense;
+import com.aman.expensetracker.exception.ResourceNotFoundException;
 import com.aman.expensetracker.repository.ExpenseRepository;
 import com.aman.expensetracker.service.ExpenseService;
 
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
-	@Autowired
-	private ExpenseRepository expenseRepository;
+    @Autowired
+    private ExpenseRepository expenseRepository;
 
-	@Override
-	public Expense saveExpense(Expense expense) {
-		return expenseRepository.save(expense);
-	}
+    @Override
+    public Expense saveExpense(Expense expense) {
+        return expenseRepository.save(expense);
+    }
 
-	@Override
-	public List<Expense> getAllExpenses() {
-		return expenseRepository.findAll();
-	}
+    @Override
+    public List<Expense> getAllExpenses() {
+        return expenseRepository.findAll();
+    }
 
-	@Override
-	public Expense getExpenseById(Long id) {
-		return expenseRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
-	}
+    @Override
+    public Expense getExpenseById(Long id) {
+        return expenseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Expense not found with id: " + id));
+    }
 
-	@Override
-	public Expense updateExpense(Long id, Expense expense) {
+    @Override
+    public Expense updateExpense(Long id, Expense expense) {
 
-		Expense existingExpense = expenseRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
+        Expense existingExpense = expenseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Expense not found with id: " + id));
 
-		existingExpense.setTitle(expense.getTitle());
-		existingExpense.setAmount(expense.getAmount());
-		existingExpense.setCategory(expense.getCategory());
-		existingExpense.setDate(expense.getDate());
+        existingExpense.setTitle(expense.getTitle());
+        existingExpense.setAmount(expense.getAmount());
+        existingExpense.setCategory(expense.getCategory());
+        existingExpense.setDate(expense.getDate());
 
-		return expenseRepository.save(existingExpense);
-	}
+        return expenseRepository.save(existingExpense);
+    }
 
-	@Override
-	public void deleteExpense(Long id) {
+    @Override
+    public void deleteExpense(Long id) {
 
-		Expense expense = expenseRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Expense not found with id: " + id));
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Expense not found with id: " + id));
 
-		expenseRepository.delete(expense);
-	}
+        expenseRepository.delete(expense);
+    }
 }

@@ -2,6 +2,8 @@ package com.aman.expensetracker.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +18,7 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @PostMapping
-    public Expense addExpense(@RequestBody Expense expense) {
+    public Expense addExpense(@Valid @RequestBody Expense expense) {
         return expenseService.saveExpense(expense);
     }
 
@@ -31,7 +33,8 @@ public class ExpenseController {
     }
 
     @PutMapping("/{id}")
-    public Expense updateExpense(@PathVariable Long id, @RequestBody Expense expense) {
+    public Expense updateExpense(@PathVariable Long id,
+                                 @Valid @RequestBody Expense expense) {
         return expenseService.updateExpense(id, expense);
     }
 

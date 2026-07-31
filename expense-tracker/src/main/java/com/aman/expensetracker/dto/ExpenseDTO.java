@@ -1,19 +1,29 @@
 package com.aman.expensetracker.dto;
 
 import java.time.LocalDate;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class ExpenseDTO {
-	@NotBlank
+
+    @NotBlank(message = "Expense title is required")
+    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
-	@NotNull
-	@Positive
+
+    @NotNull(message = "Amount is required")
+    @Positive(message = "Amount must be greater than zero")
     private Double amount;
-	@NotBlank
+
+    @NotBlank(message = "Category is required")
+    @Size(max = 50, message = "Category cannot exceed 50 characters")
     private String category;
-	@NotNull
+
+    @NotNull(message = "Expense date is required")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     public ExpenseDTO() {
@@ -25,36 +35,6 @@ public class ExpenseDTO {
         this.category = category;
         this.date = date;
     }
-    
-    public String getTitle() {
-        return title;
-    }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    // Getters & Setters
 }
