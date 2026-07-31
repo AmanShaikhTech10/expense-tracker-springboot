@@ -3,6 +3,9 @@ package com.aman.expensetracker.entity;
 import java.time.LocalDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "expenses")
@@ -12,12 +15,17 @@ public class Expense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Expense title is required")
     private String title;
 
+    @NotNull(message = "Amount is required")
+    @Positive(message = "Amount must be greater than 0")
     private Double amount;
 
+    @NotBlank(message = "Category is required")
     private String category;
 
+    @NotNull(message = "Expense date is required")
     private LocalDate date;
 
     public Expense() {
