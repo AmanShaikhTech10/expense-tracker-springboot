@@ -1,0 +1,5 @@
+package com.aman.expensetracker.exception;
+
+public class GlobalExceptionHandler {
+
+}

@@ -1,0 +1,5 @@
+package com.aman.expensetracker.service.impl;
+
+public interface UserService {
+
+}

@@ -1,0 +1,5 @@
+package com.aman.expensetracker.entity;
+
+public class User {
+
+}

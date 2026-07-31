@@ -1,0 +1,9 @@
+package com.aman.expensetracker.service;
+
+import com.aman.expensetracker.entity.User;
+
+public interface UserService {
+
+    User register(User user);
+
+}

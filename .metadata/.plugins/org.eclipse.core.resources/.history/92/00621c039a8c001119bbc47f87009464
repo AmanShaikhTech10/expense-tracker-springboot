@@ -1,0 +1,5 @@
+package com.aman.expensetracker.controller;
+
+public class ExpenseController {
+
+}

@@ -1,0 +1,5 @@
+package com.aman.expensetracker.repository;
+
+public interface ExpenseRepository {
+
+}
