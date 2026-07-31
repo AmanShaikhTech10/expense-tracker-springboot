@@ -1,5 +1,0 @@
-package com.aman.expensetracker.dto;
-
-public class ExpenseDTO {
-
-}
