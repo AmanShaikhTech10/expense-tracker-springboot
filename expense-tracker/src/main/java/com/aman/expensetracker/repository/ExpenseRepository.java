@@ -1,6 +1,7 @@
 package com.aman.expensetracker.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.aman.expensetracker.entity.Expense;
@@ -16,4 +17,11 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 	List<Expense> findByAmountBetween(Double minAmount, Double maxAmount);
 	
 	List<Expense> findByTitleContainingIgnoreCase(String keyword);
+	
+	@Query("SELECT COALESCE(SUM(e.amount), 0) FROM Expense e")
+	Double getTotalExpense();
+	
+	Expense findTopByOrderByAmountDesc();
+	
+	Expense findTopByOrderByAmountAsc();
 }

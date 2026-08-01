@@ -96,4 +96,22 @@ public class ExpenseController {
 
 		return ResponseEntity.ok("Expense deleted successfully");
 	}
+	
+	@GetMapping("/dashboard/total")
+	public ResponseEntity<Double> getTotalExpense() {
+	    return ResponseEntity.ok(expenseService.getTotalExpense());
+	}
+	
+	@GetMapping("/dashboard/highest")
+	public ResponseEntity<ExpenseDTO> getHighestExpense() {
+
+	    return ResponseEntity.ok(expenseService.getHighestExpense());
+	}
+	
+	@GetMapping("/dashboard/lowest")
+	public ResponseEntity<ExpenseDTO> getLowestExpense() {
+
+	    return ResponseEntity.ok(expenseService.getLowestExpense());
+	}
+	
 }

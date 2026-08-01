@@ -126,5 +126,34 @@ public class ExpenseServiceImpl implements ExpenseService {
 	            .map(ExpenseMapper::mapToExpenseDTO)
 	            .collect(Collectors.toList());
 	}
+	
+	@Override
+	public Double getTotalExpense() {
+	    return expenseRepository.getTotalExpense();
+	}
+
+	@Override
+	public ExpenseDTO getHighestExpense() {
+
+	    Expense expense = expenseRepository.findTopByOrderByAmountDesc();
+
+	    if (expense == null) {
+	        throw new ResourceNotFoundException("No expenses found");
+	    }
+
+	    return ExpenseMapper.mapToExpenseDTO(expense);
+	}
+
+	@Override
+	public ExpenseDTO getLowestExpense() {
+
+	    Expense expense = expenseRepository.findTopByOrderByAmountAsc();
+
+	    if (expense == null) {
+	        throw new ResourceNotFoundException("No expenses found");
+	    }
+
+	    return ExpenseMapper.mapToExpenseDTO(expense);
+	}
 
 }

@@ -21,6 +21,12 @@ public interface ExpenseService {
 
 	List<ExpenseDTO> getExpensesByTitle(String keyword);
 	
+	Double getTotalExpense();
+	
+	ExpenseDTO getHighestExpense();
+	
+	ExpenseDTO getLowestExpense();
+	
 	ExpenseDTO getExpenseById(Long id);
 
 	ExpenseDTO updateExpense(Long id, ExpenseDTO expenseDTO);
