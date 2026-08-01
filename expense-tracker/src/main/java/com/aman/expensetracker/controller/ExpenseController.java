@@ -11,47 +11,89 @@ import org.springframework.web.bind.annotation.*;
 
 import com.aman.expensetracker.dto.ExpenseDTO;
 import com.aman.expensetracker.service.ExpenseService;
+import org.springframework.data.domain.Page;
+import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @RestController
 @RequestMapping("/expenses")
 public class ExpenseController {
 
-    @Autowired
-    private ExpenseService expenseService;
+	@Autowired
+	private ExpenseService expenseService;
 
-    @PostMapping
-    public ResponseEntity<ExpenseDTO> addExpense(@Valid @RequestBody ExpenseDTO expenseDTO) {
+	@PostMapping
+	public ResponseEntity<ExpenseDTO> addExpense(@Valid @RequestBody ExpenseDTO expenseDTO) {
 
-        ExpenseDTO savedExpense = expenseService.saveExpense(expenseDTO);
+		ExpenseDTO savedExpense = expenseService.saveExpense(expenseDTO);
 
-        return new ResponseEntity<>(savedExpense, HttpStatus.CREATED);
-    }
+		return new ResponseEntity<>(savedExpense, HttpStatus.CREATED);
+	}
 
-    @GetMapping
-    public ResponseEntity<List<ExpenseDTO>> getAllExpenses() {
+	@GetMapping
+	public ResponseEntity<List<ExpenseDTO>> getAllExpenses() {
 
-        return ResponseEntity.ok(expenseService.getAllExpenses());
-    }
+		return ResponseEntity.ok(expenseService.getAllExpenses());
+	}
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ExpenseDTO> getExpenseById(@PathVariable Long id) {
+	@GetMapping("/page")
+	public ResponseEntity<Page<ExpenseDTO>> getAllExpensesWithPagination(
 
-        return ResponseEntity.ok(expenseService.getExpenseById(id));
-    }
+			@RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "5") int pageSize,
+			@RequestParam(defaultValue = "id") String sortBy, @RequestParam(defaultValue = "asc") String sortDir) {
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ExpenseDTO> updateExpense(
-            @PathVariable Long id,
-            @Valid @RequestBody ExpenseDTO expenseDTO) {
+		return ResponseEntity.ok(expenseService.getAllExpenses(pageNo, pageSize, sortBy, sortDir));
+	}
 
-        return ResponseEntity.ok(expenseService.updateExpense(id, expenseDTO));
-    }
+	@GetMapping("/date")
+	public ResponseEntity<List<ExpenseDTO>> getExpensesByDateRange(
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteExpense(@PathVariable Long id) {
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
 
-        expenseService.deleteExpense(id);
+			@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
 
-        return ResponseEntity.ok("Expense deleted successfully");
-    }
+		return ResponseEntity.ok(expenseService.getExpensesByDateRange(startDate, endDate));
+	}
+
+	@GetMapping("/category/{category}")
+	public ResponseEntity<List<ExpenseDTO>> getExpensesByCategory(@PathVariable String category) {
+
+		return ResponseEntity.ok(expenseService.getExpensesByCategory(category));
+	}
+	
+	@GetMapping("/title")
+	public ResponseEntity<List<ExpenseDTO>> getExpensesByTitle(
+	        @RequestParam String keyword) {
+
+	    return ResponseEntity.ok(
+	            expenseService.getExpensesByTitle(keyword));
+	}
+
+	@GetMapping("/amount")
+	public ResponseEntity<List<ExpenseDTO>> getExpensesByAmountRange(
+
+			@RequestParam Double minAmount, @RequestParam Double maxAmount) {
+
+		return ResponseEntity.ok(expenseService.getExpensesByAmountRange(minAmount, maxAmount));
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ExpenseDTO> getExpenseById(@PathVariable Long id) {
+
+		return ResponseEntity.ok(expenseService.getExpenseById(id));
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<ExpenseDTO> updateExpense(@PathVariable Long id, @Valid @RequestBody ExpenseDTO expenseDTO) {
+
+		return ResponseEntity.ok(expenseService.updateExpense(id, expenseDTO));
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteExpense(@PathVariable Long id) {
+
+		expenseService.deleteExpense(id);
+
+		return ResponseEntity.ok("Expense deleted successfully");
+	}
 }
