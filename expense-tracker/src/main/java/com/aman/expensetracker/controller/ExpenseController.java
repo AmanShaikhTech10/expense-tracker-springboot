@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.aman.expensetracker.dto.CategorySummaryDTO;
 import com.aman.expensetracker.dto.ExpenseDTO;
+import com.aman.expensetracker.dto.MonthlySummaryDTO;
 import com.aman.expensetracker.service.ExpenseService;
 import org.springframework.data.domain.Page;
 import java.time.LocalDate;
@@ -120,6 +121,13 @@ public class ExpenseController {
 
 	    return ResponseEntity.ok(
 	            expenseService.getCategorySummary());
+	}
+	
+	@GetMapping("/dashboard/monthly")
+	public ResponseEntity<List<MonthlySummaryDTO>> getMonthlySummary() {
+
+	    return ResponseEntity.ok(
+	            expenseService.getMonthlySummary());
 	}
 	
 }

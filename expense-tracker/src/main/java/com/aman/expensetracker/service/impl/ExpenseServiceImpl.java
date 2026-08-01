@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.aman.expensetracker.dto.CategorySummaryDTO;
 import com.aman.expensetracker.dto.ExpenseDTO;
+import com.aman.expensetracker.dto.MonthlySummaryDTO;
 import com.aman.expensetracker.entity.Expense;
 import com.aman.expensetracker.exception.ResourceNotFoundException;
 import com.aman.expensetracker.mapper.ExpenseMapper;
@@ -153,6 +154,11 @@ public class ExpenseServiceImpl implements ExpenseService {
 	@Override
 	public List<CategorySummaryDTO> getCategorySummary() {
 		return expenseRepository.getCategorySummary();
+	}
+
+	@Override
+	public List<MonthlySummaryDTO> getMonthlySummary() {
+	    return expenseRepository.getMonthlySummary();
 	}
 
 }

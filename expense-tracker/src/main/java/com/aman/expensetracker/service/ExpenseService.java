@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 
 import com.aman.expensetracker.dto.CategorySummaryDTO;
 import com.aman.expensetracker.dto.ExpenseDTO;
+import com.aman.expensetracker.dto.MonthlySummaryDTO;
 
 public interface ExpenseService {
 
@@ -23,6 +24,8 @@ public interface ExpenseService {
 	List<ExpenseDTO> getExpensesByTitle(String keyword);
 	
 	List<CategorySummaryDTO> getCategorySummary();
+	
+	List<MonthlySummaryDTO> getMonthlySummary();
 	
 	Double getTotalExpense();
 	
