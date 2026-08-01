@@ -5,36 +5,72 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 
 public class ExpenseDTO {
 
+    private Long id;
+
     @NotBlank(message = "Expense title is required")
-    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
 
     @NotNull(message = "Amount is required")
-    @Positive(message = "Amount must be greater than zero")
+    @Positive(message = "Amount must be greater than 0")
     private Double amount;
 
     @NotBlank(message = "Category is required")
-    @Size(max = 50, message = "Category cannot exceed 50 characters")
     private String category;
 
     @NotNull(message = "Expense date is required")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
 
     public ExpenseDTO() {
     }
 
-    public ExpenseDTO(String title, Double amount, String category, LocalDate date) {
+    public ExpenseDTO(Long id, String title, Double amount, String category, LocalDate date) {
+        this.id = id;
         this.title = title;
         this.amount = amount;
         this.category = category;
         this.date = date;
     }
 
-    // Getters & Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }

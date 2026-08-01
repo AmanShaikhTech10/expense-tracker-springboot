@@ -5,9 +5,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.aman.expensetracker.entity.Expense;
+import com.aman.expensetracker.dto.ExpenseDTO;
 import com.aman.expensetracker.service.ExpenseService;
 
 @RestController
@@ -18,29 +20,38 @@ public class ExpenseController {
     private ExpenseService expenseService;
 
     @PostMapping
-    public Expense addExpense(@Valid @RequestBody Expense expense) {
-        return expenseService.saveExpense(expense);
+    public ResponseEntity<ExpenseDTO> addExpense(@Valid @RequestBody ExpenseDTO expenseDTO) {
+
+        ExpenseDTO savedExpense = expenseService.saveExpense(expenseDTO);
+
+        return new ResponseEntity<>(savedExpense, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Expense> getAllExpenses() {
-        return expenseService.getAllExpenses();
+    public ResponseEntity<List<ExpenseDTO>> getAllExpenses() {
+
+        return ResponseEntity.ok(expenseService.getAllExpenses());
     }
 
     @GetMapping("/{id}")
-    public Expense getExpenseById(@PathVariable Long id) {
-        return expenseService.getExpenseById(id);
+    public ResponseEntity<ExpenseDTO> getExpenseById(@PathVariable Long id) {
+
+        return ResponseEntity.ok(expenseService.getExpenseById(id));
     }
 
     @PutMapping("/{id}")
-    public Expense updateExpense(@PathVariable Long id,
-                                 @Valid @RequestBody Expense expense) {
-        return expenseService.updateExpense(id, expense);
+    public ResponseEntity<ExpenseDTO> updateExpense(
+            @PathVariable Long id,
+            @Valid @RequestBody ExpenseDTO expenseDTO) {
+
+        return ResponseEntity.ok(expenseService.updateExpense(id, expenseDTO));
     }
 
     @DeleteMapping("/{id}")
-    public String deleteExpense(@PathVariable Long id) {
+    public ResponseEntity<String> deleteExpense(@PathVariable Long id) {
+
         expenseService.deleteExpense(id);
-        return "Expense deleted successfully";
+
+        return ResponseEntity.ok("Expense deleted successfully");
     }
 }

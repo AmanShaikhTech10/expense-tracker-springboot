@@ -2,17 +2,17 @@ package com.aman.expensetracker.service;
 
 import java.util.List;
 
-import com.aman.expensetracker.entity.Expense;
+import com.aman.expensetracker.dto.ExpenseDTO;
 
 public interface ExpenseService {
 
-    Expense saveExpense(Expense expense);
+	ExpenseDTO saveExpense(ExpenseDTO expenseDTO);
 
-    List<Expense> getAllExpenses();
+	List<ExpenseDTO> getAllExpenses();
 
-    Expense getExpenseById(Long id);
+	ExpenseDTO getExpenseById(Long id);
 
-    Expense updateExpense(Long id, Expense expense);
+	ExpenseDTO updateExpense(Long id, ExpenseDTO expenseDTO);
 
-    void deleteExpense(Long id);
+	void deleteExpense(Long id);
 }
