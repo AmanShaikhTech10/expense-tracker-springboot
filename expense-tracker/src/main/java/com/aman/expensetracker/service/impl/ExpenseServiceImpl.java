@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aman.expensetracker.dto.CategorySummaryDTO;
 import com.aman.expensetracker.dto.ExpenseDTO;
 import com.aman.expensetracker.entity.Expense;
 import com.aman.expensetracker.exception.ResourceNotFoundException;
@@ -105,55 +106,53 @@ public class ExpenseServiceImpl implements ExpenseService {
 	}
 
 	@Override
-	public List<ExpenseDTO> getExpensesByAmountRange(Double minAmount,
-	                                                 Double maxAmount) {
+	public List<ExpenseDTO> getExpensesByAmountRange(Double minAmount, Double maxAmount) {
 
-	    List<Expense> expenses =
-	            expenseRepository.findByAmountBetween(minAmount, maxAmount);
+		List<Expense> expenses = expenseRepository.findByAmountBetween(minAmount, maxAmount);
 
-	    return expenses.stream()
-	            .map(ExpenseMapper::mapToExpenseDTO)
-	            .collect(Collectors.toList());
+		return expenses.stream().map(ExpenseMapper::mapToExpenseDTO).collect(Collectors.toList());
 	}
 
 	@Override
 	public List<ExpenseDTO> getExpensesByTitle(String keyword) {
 
-	    List<Expense> expenses =
-	            expenseRepository.findByTitleContainingIgnoreCase(keyword);
+		List<Expense> expenses = expenseRepository.findByTitleContainingIgnoreCase(keyword);
 
-	    return expenses.stream()
-	            .map(ExpenseMapper::mapToExpenseDTO)
-	            .collect(Collectors.toList());
+		return expenses.stream().map(ExpenseMapper::mapToExpenseDTO).collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public Double getTotalExpense() {
-	    return expenseRepository.getTotalExpense();
+		return expenseRepository.getTotalExpense();
 	}
 
 	@Override
 	public ExpenseDTO getHighestExpense() {
 
-	    Expense expense = expenseRepository.findTopByOrderByAmountDesc();
+		Expense expense = expenseRepository.findTopByOrderByAmountDesc();
 
-	    if (expense == null) {
-	        throw new ResourceNotFoundException("No expenses found");
-	    }
+		if (expense == null) {
+			throw new ResourceNotFoundException("No expenses found");
+		}
 
-	    return ExpenseMapper.mapToExpenseDTO(expense);
+		return ExpenseMapper.mapToExpenseDTO(expense);
 	}
 
 	@Override
 	public ExpenseDTO getLowestExpense() {
 
-	    Expense expense = expenseRepository.findTopByOrderByAmountAsc();
+		Expense expense = expenseRepository.findTopByOrderByAmountAsc();
 
-	    if (expense == null) {
-	        throw new ResourceNotFoundException("No expenses found");
-	    }
+		if (expense == null) {
+			throw new ResourceNotFoundException("No expenses found");
+		}
 
-	    return ExpenseMapper.mapToExpenseDTO(expense);
+		return ExpenseMapper.mapToExpenseDTO(expense);
+	}
+
+	@Override
+	public List<CategorySummaryDTO> getCategorySummary() {
+		return expenseRepository.getCategorySummary();
 	}
 
 }

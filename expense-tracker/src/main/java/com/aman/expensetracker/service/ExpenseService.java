@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.aman.expensetracker.dto.CategorySummaryDTO;
 import com.aman.expensetracker.dto.ExpenseDTO;
 
 public interface ExpenseService {
@@ -20,6 +21,8 @@ public interface ExpenseService {
 	List<ExpenseDTO> getExpensesByAmountRange(Double minAmount, Double maxAmount);
 
 	List<ExpenseDTO> getExpensesByTitle(String keyword);
+	
+	List<CategorySummaryDTO> getCategorySummary();
 	
 	Double getTotalExpense();
 	

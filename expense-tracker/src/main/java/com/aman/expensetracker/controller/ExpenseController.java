@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.aman.expensetracker.dto.CategorySummaryDTO;
 import com.aman.expensetracker.dto.ExpenseDTO;
 import com.aman.expensetracker.service.ExpenseService;
 import org.springframework.data.domain.Page;
@@ -112,6 +113,13 @@ public class ExpenseController {
 	public ResponseEntity<ExpenseDTO> getLowestExpense() {
 
 	    return ResponseEntity.ok(expenseService.getLowestExpense());
+	}
+	
+	@GetMapping("/dashboard/category-summary")
+	public ResponseEntity<List<CategorySummaryDTO>> getCategorySummary() {
+
+	    return ResponseEntity.ok(
+	            expenseService.getCategorySummary());
 	}
 	
 }
